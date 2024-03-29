@@ -1,13 +1,19 @@
 # bcogFinalProj
 
-For this project I aim to develop a virtual makeup shopping experience using Python. The program will be an interactive makeup store where users can browse through a selection of virtual makeup products, add items to their shopping cart, and proceed to a checkout process. The application aims to provide a user-friendly interface for makeup users to explore and virtually purchase makeup products in a fun and engaging way. I also plan to incorporate features such as detailed product information and a makeup recommendation system.
+Welcome to the Weather App Project. The goal of this project is to create a basic Python application that shows the user the weather information for a certain city when it has been retreived. 
+This is a very useful tool for whether you're planning a vacation, checking the weather before leaving your house, or just in general if you're inquiring about the current weather in a specific place.
 
-They can browse products:
-Products will be displayed with a list of makeup products with details such as name, brand, price, and availability.
+Features:
+- Gives current weather data for a city
+- Can also give the weather forcasted for upcoming days
 
-Virtual Shopping Cart:
-User should be able to add products they want to buy to a virtual shopping cart.
+Users will interact with this application by being proompted to enter the name for the city they would like to know more about. They can type in if they would prefer the current weather or a weather forecast for the future upcoming days. 
 
-Makeup Recommended Products:
-Based on the products users click on there will be a recommendation system which suggests additional makeup products based on the user's selections or preferences. This will show up on the bottom of their shopping cart or while they are looking at a product.
+File Structure:
+- README.md: this file helps to provide an overview of the project for the users. It has the functionality, purpose, and file structure
+- weatherApp.py: Contains the main logic of the weather app.
+- testApp.py: Contains all the test cases to ensure the app functions as is expected.
 
+Data Input:
+Users will input a name of the city they want information for. The input data is in the form of a string. The app will make sure the input is valid.
+Valid input data includes: "Chicago" , "New York" , "Champaign"
