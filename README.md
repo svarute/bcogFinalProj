@@ -1,19 +1,28 @@
 # bcogFinalProj
 
-Welcome to the Weather App Project. The goal of this project is to create a basic Python application that shows the user the weather information for a certain city when it has been retreived. 
-This is a very useful tool for whether you're planning a vacation, checking the weather before leaving your house, or just in general if you're inquiring about the current weather in a specific place.
+Welcome to the Weather App Project. The goal of this project is to create a Python application that shows the user the weather information for a certain city when it has been retreived from a csv file. 
 
 Features:
-- Gives current weather data for a city
-- Can also give the weather forcasted for upcoming days
+- Provides weather conditions for the selected city (Sunny, Cloudy, Rainy)
+- Shows weather for the past three days in an animated form
+- Displays the weather at specific times
+- Users can select any city they would like to see
 
-Users will interact with this application by being proompted to enter the name for the city they would like to know more about. They can type in if they would prefer the current weather or a weather forecast for the future upcoming days. 
+Users will interact with this application by being prompted to choose the name for the city they would like to know more about. The input data is process as a string representing the name of the city. The app validates the input to ensure it matches one of the available cities that is in the weather data CSV file.
+
+Dependencies:
+- matplotlib is used for plotting temperature graphs
+- tkinter is used for creating the graphical user interface that users can interact with (when they choose the city)
+- pytest - I used this to run the test cases I made to make sure the app was functioning as expected
+
+Usage:
+1. download csv file
+2. run project.py file
+3. choose the city you want to see the weather for
+4. then the app will display the requested information
 
 File Structure:
 - README.md: this file helps to provide an overview of the project for the users. It has the functionality, purpose, and file structure
-- weatherApp.py: Contains the main logic of the weather app.
-- testApp.py: Contains all the test cases to ensure the app functions as is expected.
-
-Data Input:
-Users will input a name of the city they want information for. The input data is in the form of a string. The app will make sure the input is valid.
-Valid input data includes: "Chicago" , "New York" , "Champaign"
+- project.py: Contains the main logic of the weather app.
+- test_functions.py: Contains all the test cases to ensure the app functions as is expected.
+- weather_data.csv: Contains the data being used to show the weather data
