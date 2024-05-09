@@ -1,19 +1,19 @@
-Place,Temperature (9am),Temperature (12pm),Temperature (3pm),Weather
-New York,65,70,68,Sunny
-New York,68,72,68,Partly Cloudy
-New York,70,73,72,Rainy
-Chicago,55,60,57,Sunny
-Chicago,57,62,59,Partly Cloudy
-Chicago,58,63,61,Rainy
-Paris,68,77,73,Sunny
-Paris,70,79,75,Partly Cloudy
-Paris,72,81,79,Rainy
-London,64,68,66,Cloudy
-London,66,70,68,Partly Cloudy
-London,68,72,70,Rainy
-Tokyo,72,77,75,Sunny
-Tokyo,75,79,77,Partly Cloudy
-Tokyo,77,81,79,Rainy
-Sydney,77,82,81,Sunny
-Sydney,79,84,82,Partly Cloudy
-Sydney,81,86,84,Rainy
+Place,Temperature (9am),Temperature (12pm),Temperature (3pm),Temperature (6pm),Weather
+New York,45,70,68,65,Sunny
+New York,50,72,68,66,Partly Cloudy
+New York,45,73,72,69,Rainy
+Chicago,45,60,57,54,Sunny
+Chicago,57,62,59,56,Partly Cloudy
+Chicago,28,33,62,48,Rainy
+Paris,48,47,54,43,Cloudy
+Paris,70,79,75,72,Sunny
+Paris,72,81,79,74,Rainy
+London,64,68,66,63,Cloudy
+London,66,70,68,64,Partly Cloudy
+London,68,72,70,67,Rainy
+Tokyo,72,77,75,72,Sunny
+Tokyo,75,79,77,73,Partly Cloudy
+Tokyo,77,81,79,75,Rainy
+Alaska,10,11,20,27,Snowy
+Alaska,14,55,60,32,Snowy
+Alaska,22,32,35,12,Snowy 
