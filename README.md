@@ -1,14 +1,15 @@
 # bcogFinalProj
 
-Welcome to the Weather App Project. The goal of this project is to create a Python application that shows the user the weather information for a certain city when it has been retreived from a csv file. 
+Welcome to the Weather App Project. The goal of this project is to create a Python application that shows the user the weather information for a certain city when it has been retrieved from a csv file. 
 
 Features:
-- Provides weather conditions for the selected city (Sunny, Cloudy, Rainy)
-- Shows weather for the past three days in an animated form
+- Provides weather conditions for the selected city (Sunny, Cloudy, Rainy, Snowy)
+- Shows the weather for the past three days in visual form
 - Displays the weather at specific times
 - Users can select any city they would like to see
+- Users can also set a threshold for their temperature comfort level
 
-Users will interact with this application by being prompted to choose the name for the city they would like to know more about. The input data is process as a string representing the name of the city. The app validates the input to ensure it matches one of the available cities that is in the weather data CSV file.
+Users will interact with this application by being prompted to choose the name of the city they would like to know more about. The input data is processed as a string representing the name of the city. The app validates the input to ensure it matches one of the available cities that is in the weather data CSV file.
 
 Dependencies:
 - matplotlib is used for plotting temperature graphs
