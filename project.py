@@ -1,12 +1,10 @@
 #Suhani Varute
 
+from tkinter import *
 import csv
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from tkinter import *
 
-
-#read csv data
+# Read csv data
 def read_weather_data(file_path):
     data = {}
     with open(file_path, 'r') as file:
@@ -16,112 +14,109 @@ def read_weather_data(file_path):
             temp_9am_fahrenheit = int(row['Temperature (9am)'])
             temp_12pm_fahrenheit = int(row['Temperature (12pm)'])
             temp_3pm_fahrenheit = int(row['Temperature (3pm)'])
+            temp_6pm_fahrenheit = int(row['Temperature (6pm)'])
+
             weather = row['Weather']
             if place not in data:
                 data[place] = {'temperatures': [], 'weather': []}
-            data[place]['temperatures'].append((temp_9am_fahrenheit, temp_12pm_fahrenheit, temp_3pm_fahrenheit))
+
+            # Appending temperatures for each day separately
+            data[place]['temperatures'].append((temp_9am_fahrenheit, temp_12pm_fahrenheit, temp_3pm_fahrenheit, temp_6pm_fahrenheit))
             data[place]['weather'].append(weather)
     return data
 
-#animation
-def animate_temperature_graph(data, place):
+# Draw temperature graph for a specific place
+def draw_temperature_graph(data, place, temperature_threshold):
+
     if place not in data:
         print("Sorry, weather information for {} is not available.".format(place))
+        raise KeyError("Weather information for {} is not available.".format(place))
         return
+    
     temperatures = data[place]['temperatures']
-    times_of_day = ['9am', '12pm', '3pm']
-    days = range(1, len(temperatures) + 1)
-
-    fig, ax = plt.subplots(figsize=(10, 6))  #set the larger figure
+    weather_days = len(temperatures)
+    times_of_day = ['9am', '12pm', '3pm', '6pm']
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
     ax.set_facecolor('#E6E6FA')  
 
-    # Define colors for the lines
-    line_colors = ['#8A2BE2', '#32CD32', '#4169E1']  # Purple, green, and blue
+    line_colors = ['#8A2BE2', '#32CD32', '#4169E1', '#FFA500']  
+    line_styles = ['-', '--', ':', '-']  
+    markers = ['o', 's', '^', 'D']  
+    
+    # Plot each day temperatures
+    for day in range(weather_days):
+        x_data = list(range(len(times_of_day)))
+        y_data = [temperatures[day][i] for i in range(len(times_of_day))]
 
-    line_styles = ['-', '--', ':']  
-    markers = ['o', 's', '^']  
-    
-    for i in range(len(times_of_day)):
-        line, = ax.plot([], [], lw=2, linestyle=line_styles[i], color=line_colors[i], marker=markers[i], markersize=8)
-    
-    ax.set_xlabel('Time of Day') #axis label
+        line, = ax.plot(x_data, y_data, lw=2, linestyle=line_styles[day], color=line_colors[day], marker=markers[day], markersize=8, label=f"Day {day+1}")
+        ax.annotate(f"{place}: Day {day+1}", xy=(x_data[0], y_data[0]), xytext=(x_data[0] + 0.2, y_data[0] + 2),
+                     arrowprops=dict(facecolor='black', arrowstyle='->'), fontsize=10, color='black')
+        line.set_picker(5)  # Set picker for each line
+
+    ax.set_xlabel('Time of Day')
     ax.set_ylabel('Temperature (°F)')
     ax.set_title('Temperature Trend Over 3 Days for {}'.format(place))
-    ax.set_xlim(0, len(temperatures))
+    ax.set_xlim(0, len(times_of_day)-1)
     ax.set_ylim(0, 100)
-    ax.set_xticks(range(len(times_of_day)))  #setting axis ticks
-    ax.set_xticklabels(times_of_day)  #Setting the custom tick labels for x-axis
+    ax.set_xticks(range(len(times_of_day)))
+    ax.set_xticklabels(times_of_day)
+    ax.axhline(y=temperature_threshold, color='r', linestyle='--', label=f'Temperature Threshold: {temperature_threshold}°F')
+    ax.legend()
+    
+    ax.text(0.1, temperature_threshold + 2, 'Anything above this is too hot for you', fontsize=10, color='red')
 
-    def init():
-        for line in ax.lines:
-            line.set_data([], [])
-        return ax.lines
+    def on_pick(event):
+        if isinstance(event.artist, plt.Line2D):
+            x_index = int(event.mouseevent.xdata)
+            y_value = event.artist.get_ydata()[x_index]
+            plt.gca().set_title(f"Temperature at {times_of_day[x_index]}: {y_value}°F")
 
-    def update(frame):
-        for i, line in enumerate(ax.lines):
-            x_data = list(range(len(temperatures)))
-            y_data = [temps[frame] for temps in temperatures]  #Access temperature values for the current time in the day
-            line.set_data(x_data, y_data)
-            if i == frame:
-                line.set_linestyle('--')
-            else:
-                line.set_linestyle('-')
-        return ax.lines
-
-    ani = FuncAnimation(fig, update, frames=len(times_of_day), init_func=init, blit=True)
+    fig.canvas.mpl_connect('pick_event', on_pick)
+    
     plt.show()
 
 
-    def update(frame):
-        for i, line in enumerate(ax.lines):
-            x_data = list(range(len(temperatures)))
-            y_data = [temps[frame] for temps in temperatures]  #Access temperature values for the current time in the day
-            line.set_data(x_data, y_data)
-            if i == frame:
-                line.set_linestyle('--')
-            else:
-                line.set_linestyle('-')
-        return ax.lines
-
-    ani = FuncAnimation(fig, update, frames=len(times_of_day), init_func=init, blit=True)
-    plt.show()
-
-
-#welcome message and input for city selecting
+# Welcome message and input for city selecting
 def main():
-    #read the weather data in csv
     file_path = 'weather_data.csv'
     weather_data = read_weather_data(file_path)
     
-    #creating GUI window
     root = Tk()
     root.title("Weather App")
     root.geometry("800x600")  
     root.configure(bg='#E6E6FA') 
     
-    #Function to animate graph when a city button is clicked
-    def animate_graph(place):
-        animate_temperature_graph(weather_data, place)
-
-    # Welcome message
     Label(root, text="Welcome to the Weather App!", font=("Papyrus", 18), bg='#E6E6FA').pack(pady=8)
+    Label(root, text="Choose a City to see its weather", font=("Papyrus", 15), bg='#E6E6FA').pack(pady=20)
 
-    Label(root, text="Choose a City to see it's weather", font=("Papyrus", 15), bg='#E6E6FA').pack(pady=20)
+    # temperature threshold slider
+    temperature_slider = Scale(root, from_=0, to=100, orient=HORIZONTAL, label="Temperature Threshold (°F)", length=300)
+    temperature_slider.pack(pady=10)
+    temperature_slider.set(50)
 
+    Label(root, text="Adjust the threshold to the temperature you are comfortable with", font=("Papyrus", 12), bg='#E6E6FA').pack()
 
-    #weather icons 
-    weather_icons = {
+    # symbols corresponding to different weather conditions
+    weather_symbols = {
         'Sunny': '☀️',
-        'Partly Cloudy': '⛅',
         'Cloudy': '☁️',
-        'Rainy': '🌧️'
+        'Rainy': '🌧️',
+        'Stormy': '⛈️',
+        'Snowy': '❄️'
     }
 
-    #creating buttons for each city with customized styling and weather icons
-    for place in weather_data.keys():
-        weather_icon = weather_icons[weather_data[place]['weather'][0]]
-        Button(root, text=f"{weather_icon} {place}", command=lambda p=place: animate_graph(p),
-               font=("Papyrus", 16), padx=20, pady=10, relief=RAISED, bg='#8A2BE2', fg='purple').pack(pady=5)
+    for place, weather_info in weather_data.items():
+        # Get the weather for the first day
+        current_weather = weather_info['weather'][0]
+        # Select appropriate symbol for the current weather
+        weather_symbol = weather_symbols.get(current_weather, '❓')
+
+        # Add buttons with weather symbols for each city
+        Button(root, text=f"{place} {weather_symbol}", 
+               command=lambda p=place: draw_temperature_graph(weather_data, p, temperature_slider.get()),
+               font=("Papyrus", 16), padx=20, pady=10, relief=RAISED, 
+               bg='#8A2BE2', fg='purple').pack(pady=5)
 
     root.mainloop()
 
