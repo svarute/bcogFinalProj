@@ -25,6 +25,7 @@ def read_weather_data(file_path):
             data[place]['weather'].append(weather)
     return data
 
+
 # Draw temperature graph for a specific place
 def draw_temperature_graph(data, place, temperature_threshold):
 
